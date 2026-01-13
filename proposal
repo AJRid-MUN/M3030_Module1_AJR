@@ -1,0 +1,21 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{Proposal: FFT and Frequency-Sensitive Modulation of Digital Audio}
+\author{A.J. Rideout}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Objective}
+The goal of this project is to explore the use of fast fourier transform (FFT) algorithms in the realm of digital signal processing, and utilize them to create a digital filter effect (e.g band EQ or low-pass) that can be applied to digital waveform audio data. These effects can most intuitively be accomplished through implementation of a discrete fourier transform on the waveform audio data, and multiplication by a response curve on the resulting frequency domain data. Depending on how things go, we may construct a model of a commonly used FFT (e.g Cooley-Tukey based algorithms), though doing so may be difficult and computationally slower than using existing implementations for reasons explored in section 3.
+
+\section{Background}
+FFT algorithms are widely used in digital sound processing, and depending on the use case they may be different. It may be useful to explore their function by creating a model algorithm that is effective on smaller data sizes. However, FFT algorithms can still be costly for larger data sizes without careful memory handling. Filters are also notably prominent in sound design and utilized to great effect in most professional multimedia forms containing sound. For those interested in sound design, having a fundamental understanding of what equalization or low/hi-pass filters do may be useful. 
+
+\section{Expected Results}
+It is expected that the most difficult part of implementing a filter in python, if not using a pre-made FFT algorithm, will be modeling an FFT algorithm. Performance lies not only in the raw calculations but also the internal management of memory and data, which python in particular may struggle with. Smart use of memory is another challenge in and of itself that may provide great difficulty.
+
+\end{document}
