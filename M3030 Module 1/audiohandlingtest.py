@@ -30,10 +30,12 @@ elif audio.channels == 2:
 array_raw = audio.get_array_of_samples() #Getting array of raw audio data...
 array = np.array(array_raw)
 print("converted to array for modification and analysis.")
+print("Input.wav contains ",len(array)," samples!")
 
 plt.plot(array)
 plt.title("Input.wav Amplitude over Time")
 plt.xlabel("Time (1/"+str(samplerate)+"s)")
 plt.ylabel("Amplitude")
 plt.show()
+
 
