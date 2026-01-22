@@ -55,5 +55,5 @@ def FFT_Cooley_Tukey(a):
             fd[n+N//2]=FFT_evens[n]-twiddle*FFT_odds[n]
         return fd
 
-##alright! not recursive, but can be manipulated to be...
-##also, the second half is just the 
+##hah! forgot to change this comment. wasn't too bad to make it recursive!
+
