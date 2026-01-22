@@ -24,17 +24,34 @@ def pad_zeroes(a):
 #might later want to also return the amount padded so if we modulate on
 #frequency domain, we can remove our appended silence in output audio
 
-def compute_twiddles(N):
-    n=np.arange(N)
-    twiddles=np.exp((-2j*np.pi*n)/N)
-    return twiddles
-    
-def Cooley_Tukey(a):
+def DFT(a):
     if isinstance(a, np.ndarray):
         N=len(a)
-        twiddles=compute_twiddles(N)
-        return 0
-    else:
-        print("Cooley_Tukey expects a numpy array argument.")
-        return None
-#seems a good place to stop... haha
+        k=np.arange(N)
+        fd=np.zeros(N, dtype=complex)
+
+        for n in range(N):
+            fd[n]=np.sum(a*np.exp((-2*np.pi*1j*k*n)/N))
+            ##opted not to precompute the twiddles at a performance
+            ##loss. i found handling them a bit tricky! might mess 
+            ##with it later but for now im too stuck in one place.
+
+        return fd
+
+def FFT_Cooley_Tukey(a):
+    if isinstance(a, np.ndarray):
+        N=len(a)
+        evens=a[::2]
+        odds=a[1::2]
+        DFT_evens=DFT(evens)
+        DFT_odds=DFT(odds)
+        fd=np.zeros(N)
+
+        for n in range(N//2):
+            twiddle=np.exp((-2*np.pi*1j*n)/N)
+            fd[n]=DFT_evens[n]+twiddle*DFT_odds[n]
+            fd[n+N//2]=DFT_evens[n]-twiddle*DFT_odds[n]
+
+        return fd
+##alright! not recursive, but can be manipulated to be...
+
