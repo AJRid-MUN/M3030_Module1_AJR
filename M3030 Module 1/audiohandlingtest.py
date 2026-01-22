@@ -3,6 +3,7 @@ import scipy as sp
 from matplotlib import pyplot as plt
 from pydub import AudioSegment 
 from pathlib import Path
+import FFT_funcs as FFT
 
 #Setting up to read my Input sample!
 currentpath = Path(__file__).resolve()
@@ -37,5 +38,16 @@ plt.title("Input.wav Amplitude over Time")
 plt.xlabel("Time (1/"+str(samplerate)+"s)")
 plt.ylabel("Amplitude")
 plt.show()
+
+DFT_array_raw=FFT.FFT_Cooley_Tukey(FFT.pad_zeroes(array))
+DFT_array=DFT_array_raw
+##...wait, what units ARE these?
+
+plt.plot(np.abs(DFT_array)) ##I guess it's redundant to include values >N//2...
+plt.title("Input.wav frequency distribution")
+plt.xlabel("frequency (???)")
+plt.ylabel("Coefficient")
+plt.show()
+
 
 

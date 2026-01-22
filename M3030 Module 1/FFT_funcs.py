@@ -41,17 +41,19 @@ def DFT(a):
 def FFT_Cooley_Tukey(a):
     if isinstance(a, np.ndarray):
         N=len(a)
+        if N<= 2:
+            return DFT(a)
         evens=a[::2]
         odds=a[1::2]
-        DFT_evens=DFT(evens)
-        DFT_odds=DFT(odds)
-        fd=np.zeros(N)
+        FFT_evens=FFT_Cooley_Tukey(evens)
+        FFT_odds=FFT_Cooley_Tukey(odds)
+        fd=np.zeros(N, dtype=complex)
 
         for n in range(N//2):
             twiddle=np.exp((-2*np.pi*1j*n)/N)
-            fd[n]=DFT_evens[n]+twiddle*DFT_odds[n]
-            fd[n+N//2]=DFT_evens[n]-twiddle*DFT_odds[n]
-
+            fd[n]=FFT_evens[n]+twiddle*FFT_odds[n]
+            fd[n+N//2]=FFT_evens[n]-twiddle*FFT_odds[n]
         return fd
-##alright! not recursive, but can be manipulated to be...
 
+##alright! not recursive, but can be manipulated to be...
+##also, the second half is just the 
