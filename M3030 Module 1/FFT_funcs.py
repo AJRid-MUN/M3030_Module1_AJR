@@ -55,5 +55,5 @@ def FFT_Cooley_Tukey(a):
             fd[n+N//2]=FFT_evens[n]-twiddle*FFT_odds[n]
         return fd
 
-##hah! forgot to change this comment. wasn't too bad to make it recursive!
-
+def get_freq_bins(sample_rate, N):
+    return np.arange(0, N)*(sample_rate/N)

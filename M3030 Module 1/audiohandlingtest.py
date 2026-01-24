@@ -31,7 +31,15 @@ elif audio.channels == 2:
 array_raw = audio.get_array_of_samples() #Getting array of raw audio data...
 array = np.array(array_raw)
 print("converted to array for modification and analysis.")
-print("Input.wav contains ",len(array)," samples!")
+N=len(array)
+print("Input.wav contains ",N," samples!")
+
+DC_offset=np.mean(array)
+
+if DC_offset != 0:
+    print("DC offset detected! Correcting...")
+    array=array-DC_offset
+    print("DC offset corrected.")
 
 plt.plot(array)
 plt.title("Input.wav Amplitude over Time")
@@ -39,13 +47,15 @@ plt.xlabel("Time (1/"+str(samplerate)+"s)")
 plt.ylabel("Amplitude")
 plt.show()
 
-DFT_array_raw=FFT.FFT_Cooley_Tukey(FFT.pad_zeroes(array))
-DFT_array=DFT_array_raw
-##...wait, what units ARE these?
+DFT_array=FFT.FFT_Cooley_Tukey(FFT.pad_zeroes(array))
 
-plt.plot(np.abs(DFT_array)) ##I guess it's redundant to include values >N//2...
+N=len(array)
+
+freqs=FFT.get_freq_bins(samplerate, N)
+
+plt.plot(freqs[:N//2], np.abs(DFT_array)[:N//2]) ##I guess it's redundant to include values >N//2...
 plt.title("Input.wav frequency distribution")
-plt.xlabel("frequency (???)")
+plt.xlabel("frequency (Hz.)")
 plt.ylabel("Coefficient")
 plt.show()
 
