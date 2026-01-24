@@ -38,6 +38,17 @@ def DFT(a):
 
         return fd
 
+def iDFT(a):
+    if isinstance(a, np.ndarray):
+        N=len(a)
+        k=np.arange(N)
+        fd=np.zeros(N, dtype=complex)
+
+        for n in range(N):
+            fd[n]=np.sum(a*np.exp((2*np.pi*1j*k*n)/N))
+
+        return fd/N
+    
 def FFT_Cooley_Tukey(a):
     if isinstance(a, np.ndarray):
         N=len(a)
@@ -57,3 +68,20 @@ def FFT_Cooley_Tukey(a):
 
 def get_freq_bins(sample_rate, N):
     return np.arange(0, N)*(sample_rate/N)
+
+def iFFT_Cooley_Tukey(a):
+    if isinstance(a, np.ndarray):
+        N=len(a)
+        if N<= 2:
+            return iDFT(a)
+        evens=a[::2]
+        odds=a[1::2]
+        FFT_evens=iFFT_Cooley_Tukey(evens)
+        FFT_odds=iFFT_Cooley_Tukey(odds)
+        fd=np.zeros(N, dtype=complex)
+
+        for n in range(N//2):
+            twiddle=np.exp((2*np.pi*1j*n)/N)
+            fd[n]=FFT_evens[n]+twiddle*FFT_odds[n]
+            fd[n+N//2]=FFT_evens[n]-twiddle*FFT_odds[n]
+        return fd
