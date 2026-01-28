@@ -107,3 +107,21 @@ def normalize(a):
         if max>0:
             a=a/max
         return a
+
+
+def lowpass_hanning(a, cutoff):
+        if isinstance(a, np.ndarray):
+            N=len(a)
+            length=N//20
+            length=min(length,cutoff-1)
+            window=np.zeros(N)
+            hann=np.hanning(2*length) # size of window in terms of bins, not scaling with size lol
+            scale_up=hann[:length]
+            scale_down=hann[length:]
+            mid=N//2 # center index (DC)
+            window[mid-cutoff+length:mid+cutoff-length]=1
+            window[mid+cutoff-length:mid+cutoff]=scale_down
+            window[mid-cutoff:mid-cutoff+length]=scale_up
+            window=np.fft.ifftshift(window) # center back for FFT convention
+            if cutoff<N//2:
+                return a*window
