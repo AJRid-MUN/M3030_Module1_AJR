@@ -1,0 +1,22 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+\title{Fast Fourier Transform -- Analyzing and Modifying Digital Audio Frequency Content}
+\author{A.J. Rideout}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Abstract} Fast Fourier transform algorithms are the standard way to calculate the discrete Fourier transform in most practical applications. In the case of digital audio, the Fourier transform is especially valuable for analysis and modification of audio signals. It allows us to not only characterize signals, but shape their sound through modification of frequency content. This is known as filtering, and it is one of the most fundamental methods of altering sound, and it can be accomplished in many ways. After developing a fast fourier transform algorithm, we develop and refine a simple frequency-domain filter. We first created an ideal filter, which has drawbacks through the Gibbs effect. We used a window function, the Hanning window, to combat the ringing and overshoot caused by the Gibbs effect, creating a more usable filter.
+
+\section{Introduction} The Fourier transform is an integral transform that decomposes a function over a continuous domain into a spectrum of complex exponential elements, each corresponding to some frequency that is present within the original data. For each element, there exists a coefficient that denotes that frequencies presence within the signal, with a higher value indicating an abundance of that frequency. The nth fourier coefficient, $\hat{f}(n)$, is defined as: \[\hat{f}(n)=\int_{\mathbb{T}^1}f(x)e^{-2\pi inx}\space dx\]
+where $\mathbb{T}^1$ defines the one dimensional torus: $\mathbb{R}/\mathbb{Z}$. \cite{1}
+
+\begin{thebibliography}{9}
+\bibitem{1} 
+Bounchalen, Anna. \textit{An Elementary Introduction to Fast Fourier Transform Algorithms}. University of Chicago Mathematics REU, 2019. \url{https://math.uchicago.edu/~may/REU2019/REUPapers/Bounchaleun.pdf}
+\end{document}
