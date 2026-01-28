@@ -11,10 +11,14 @@
 
 \maketitle
 
+\section{Declaration of Use of Generative AI:} Generative language models have been used to debug and refine hand-written python code used within this assignment, as well as to quickly retrieve information from documentation of used libraries. 
+
 \section{Abstract} Fast Fourier transform algorithms are the standard way to calculate the discrete Fourier transform in most practical applications. In the case of digital audio, the Fourier transform is especially valuable for analysis and modification of audio signals. It allows us to not only characterize signals, but shape their sound through modification of frequency content. This is known as filtering, and it is one of the most fundamental methods of altering sound, and it can be accomplished in many ways. After developing a fast fourier transform algorithm, we develop and refine a simple frequency-domain filter. We first created an ideal filter, which has drawbacks through the Gibbs effect. We used a window function, the Hanning window, to combat the ringing and overshoot caused by the Gibbs effect, creating a more usable filter.
 
 \section{Introduction} The Fourier transform is an integral transform that decomposes a function over a continuous domain into a spectrum of complex exponential elements, each corresponding to some frequency that is present within the original data. For each element, there exists a coefficient that denotes that frequencies presence within the signal, with a higher value indicating an abundance of that frequency. The nth fourier coefficient, $\hat{f}(n)$, is defined as: \[\hat{f}(n)=\int_{\mathbb{T}^1}f(x)e^{-2\pi inx}\space dx\]
-where $\mathbb{T}^1$ defines the one dimensional torus: $\mathbb{R}/\mathbb{Z}$. \cite{1}
+where $\mathbb{T}^1$ defines the one dimensional torus: $\mathbb{R}/\mathbb{Z}$. \cite{1}. The Fourier transform is similarly defined: \[\hat{f}(\xi)=\int_{\mathbb{R}}f(x)e^{-2\pi ix\xi}\space dx\] These definitions are derived from the inner product of a space created over $\mathbb{T}^1$, where each exponential $e^{-2\pi inx}$ (which we may denote as $e_n$) is orthogonal to each other \cite{1} and refers to a specific amount of rotations about $\mathbb{T}$. By taking the inner product of our function $f(x)$ with $e_n$, we are essentially finding a projection of our function onto the amount of rotations corresponding to $e_n$, which is larger in magnitude when it corresponds highly to $e_n$. 
+
+When working with digital audio signals, an important thing to keep in mind is that audio signals are discrete. They consist of a series of samples that represent the amplitude of our sound at a given time.
 
 \begin{thebibliography}{9}
 \bibitem{1} 
