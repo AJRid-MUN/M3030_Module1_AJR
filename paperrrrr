@@ -59,30 +59,29 @@ Though the ringing caused by Gibbs effect is not as noticeable in the noise sign
 
 \section{Conclusion} Though the Hanning window made for a more practical filter for general use cases, evaluating filters on the whole signal at once is simply not conducive to modern workflow standards. Real-time processing with minimal delay/buffer is a standard request, and there exist more complicated and intimate filter systems that evaluate on not only the frequency domain data, but even the time domain data. As well, some systems use a "buffer" system that evaluates on small chunks of our audio at a time, with a small delay to apply the filtering on each one individually, allowing for efficient real-time feedback and modification of parameters like cutoff. \cite{7} These processes are highly optimized and demand control at a memory level for maximum efficiency. 
 
-\section{Appendix}
+\section{Appendix} Examples of discussed scripts and demonstrative audio can be found at \url{https://drive.google.com/drive/folders/1_5AbrgeSSUQO9WMZWsFwFXltdj52x0ze?usp=sharing}. As well, there exists a repository at \url{https://github.com/AJRid-MUN/M3030_Module1_AJR} which shows an over-time development of these scripts, and other files relevant to the project, including unused graphs and audio. 
 
 \begin{thebibliography}{9}
 \bibitem{1} 
 Bounchalen, Anna. \textit{An Elementary Introduction to Fast Fourier Transform Algorithms}. University of Chicago Mathematics REU, 2019. \url{https://math.uchicago.edu/~may/REU2019/REUPapers/Bounchaleun.pdf}
 
 \bibitem{2}
-\url{https://brianmcfee.net/dstbook-site/content/ch06-dft-properties/Conjugate-Symmetry.html}
+McFee, Brian. \textit{Digital Signals Theory}. 6.3. Conjugate Symmetry - Digital Signals Theory. Accessed January 28, 2026. \url{https://brianmcfee.net/dstbook-site/content/ch06-dft-properties/Conjugate-Symmetry.html}
 
 \bibitem{3}
-\url{https://www.analog.com/en/resources/glossary/frequency_bin.html}
+\textit{Frequency Bin}. Frequency Bin | Analog Devices. Accessed January 28, 2026.  \url{https://www.analog.com/en/resources/glossary/frequency_bin.html}
 
 \bibitem{4}
-\url{https://www.dspguide.com/ch11/4.htm}
+Smith, Steven W. \textit{The Scientist and Engineer’s Guide To Digital Signal Processing Gibbs Effect}. Accessed January 28, 2026. \url{https://www.dspguide.com/ch11/4.htm}
 
 \bibitem{5}
-\url{https://www.sciencedirect.com/topics/engineering/hanning-window}
+\textit{Hanning Window - an Overview | Sciencedirect Topics}. ScienceDirect. Accessed January 28, 2026.  \url{https://www.sciencedirect.com/topics/engineering/hanning-window}
 
 \bibitem{6}
-Keim, Robert. \textit{The Nyquist-Shannon Theorem: Understanding Sampled Systems - Technical Articles.}. All About Circuits, May 6 2020. \url{https://www.allaboutcircuits.com/technical-articles/nyquist-shannon-theorem-understanding-sampled-systems/}
+Keim, Robert. \textit{The Nyquist-Shannon Theorem: Understanding Sampled Systems - Technical Articles}. All About Circuits, May 6 2020. \url{https://www.allaboutcircuits.com/technical-articles/nyquist-shannon-theorem-understanding-sampled-systems/}
 \end{thebibliography}
 
 \bibitem{7}
-\url{https://people.montefiore.uliege.be/josmalskyj/files/Gardner1995Efficient.pdf}
+Gardner, William. \textit{Efficient Convolution without Input-Output Delay*}. Cambridge Journal of the Audio Engineering Society 43 (3): 127–136. Accessed January, 28, 2026.\url{https://people.montefiore.uliege.be/josmalskyj/files/Gardner1995Efficient.pdf}
 
 \end{document}
-
