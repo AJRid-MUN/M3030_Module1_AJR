@@ -79,9 +79,10 @@ Smith, Steven W. \textit{The Scientist and Engineer’s Guide To Digital Signal 
 
 \bibitem{6}
 Keim, Robert. \textit{The Nyquist-Shannon Theorem: Understanding Sampled Systems - Technical Articles}. All About Circuits, May 6 2020. \url{https://www.allaboutcircuits.com/technical-articles/nyquist-shannon-theorem-understanding-sampled-systems/}
-\end{thebibliography}
 
 \bibitem{7}
 Gardner, William. \textit{Efficient Convolution without Input-Output Delay*}. Cambridge Journal of the Audio Engineering Society 43 (3): 127–136. Accessed January, 28, 2026.\url{https://people.montefiore.uliege.be/josmalskyj/files/Gardner1995Efficient.pdf}
+\end{thebibliography}
 
 \end{document}
+
