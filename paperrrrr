@@ -31,8 +31,35 @@ When working with digital audio signals, an important thing to keep in mind is t
 With this definition of the DFT, we can retrieve the coefficients of our sound data, analyze or modify them, and convert them back into our original signal. However, doing so, especially for large $N$, is computationally expensive and often not calculated according to this definition. Instead, there exist widely-used fast Fourier transform (FFT) algorithms that use alternate, less intensive calculations that yield the same result as the DFT. Many take advantage of existing symmetries of the DFT for signals with specific characteristics. One widely used example of an FFT algorithm is the Cooley-Tukey (Radix-2) algorithm, which operates specifically on data sets of size $N=2^m$. The algorithm reduces the required operations from $O(N^2)$ operations to $O(N log_2N)$ operations. \cite{1} Essentially, the algorithm starts by splitting our original sample into two separate chunks -- samples of even and odd indices, which can be repeated recursively until we are working with many DFTs of size 2, since $N=2^m$. When substituted into the DFT formula, it yields: \[\hat{f}(n)=\frac{1}{\sqrt{N}}\left[\sum^{N/2-1}_{m=0}f(2m)\omega_N^{n(2m)}+\sum_{m=0}^{N/2-1}f(2m+1)\omega_N^{n(2m+1)}\right]\] \[=\frac{1}{\sqrt{N}}\left[\sum^{N/2-1}_{m=0}f(2m)\omega_{N/2}^{n \cdot m}+\omega_{N}^{n}\sum_{m=0}^{N/2-1}f(2m+1)\omega_{N/2}^{n \cdot m}\right]\]\cite{1} Again, note that for practical use cases the $\frac{1}{\sqrt{N}}$ factor can be omitted. 
 To meet the $N=2^m$ requirement of the Cooley-Tukey algorithm, we may pad our signal with zeroes (end silence) to reach the nearest power of 2. This comes with the small, but welcome benefit of reducing our bin size (increasing $N$ implies $f_s/N$ decreases), which allows us to  a more dense range of discrete frequencies. Thanks to the similarity of the inverse DFT to the DFT, it is not difficult to modify our algorithm to work in the inverse direction. After we obtain our DFT data, we may modify it in a few ways. To implement an ideal filter, we can flatten the FFT of our signal with zeroes after (low-pass) or before (hi-pass) the cutoff frequency, ensuring we maintain the conjugate symmetry of the FFT. However, as previously mentioned, ideal filters will introduce un-wanted ringing via spectral leakage due to how we handled the drop-off in the frequency domain. As previously mentioned, this can be reduced with interpolation via a window function. For our use case, the mentioned Hanning window, defined: \[W_H=\frac{1}{2}(1-cos(2\pi\frac{n}{N})) \text{ when } 0\leq n=N-1, 0 \text{ otherwise}\] Which generates a nice bell-shaped curve that we can multiply across our frequency domain, making for a more gradual shift around the cutoff frequency which reduces spectral leakage. \cite{5}
 
-\section{Results} Our first step to operating on signals is to convert them into a workable data type. We may use the pydub library to import .wav or .mp3 files as AudioSegment data types, which we may convert into numpy arrays for data handling and operation. Then, we can and calculate our FFTs on those arrays, outputting them as arrays. 
+\section{Results} Our first step to operating on signals is to convert them into a workable data type. We may use the pydub library to import .wav or .mp3 files as AudioSegment data types, which we may convert into numpy arrays for data handling and operation. Then, we can and calculate our FFTs on those arrays, outputting them as arrays. If we so wish, we could also generate randomized numpy arrays as noise samples, which are great for testing on. 
+To get a .wav file back from a numpy array, we may use scipy's write feature to write our array as a file.
+Our first step was to program a straightforward DFT algorithm, with which we could build our FFT algorithm. From these, it is not too difficult to define out inverse DFT, and then our inverse FFT. Then, we defined simple flat-cutoff ideal filters, which essentially just replace regions within their cutoff region with zeroes.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.6\linewidth]{BeforeFilters.png}
+    \caption{The DFT of our random noise signal before applying filters.}
+    \label{fig:placeholder}
+\end{figure}
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\linewidth]{AfterIdealFilters.png}
+    \caption{The same signal after having ideal hi-pass and ideal low-pass filters applied.}
+    \label{fig:placeholder}
+\end{figure}
+
+It is worth noting that the regions flattened by high and low pass filters are essentially complement, which is why the cutoff of the hi-pass filter looks so much smaller  than the low pass even at frequency cutoffs relatively close to each other in terms of the amount of bins. 
+Though the ringing caused by Gibbs effect is not as noticeable in the noise signals, they are much more noticeable in a sound with more frequent amplitude changes, like a digital drum track. To curb this, we can use the previously mentioned Hanning window function. Numpy has a pre-existing implementation we can use to generate a mask with an appropriate cutoff point that we can multiply across the FFT of our data.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.6\linewidth]{afterhanning.png}
+    \caption{The noise signal after a Hanning window low-pass filter at the same cutoff as the previous low-pass. Notice the more gradual cutoff}
+    \label{fig:placeholder}
+\end{figure}
+
+\section{Conclusion} Though the Hanning window made for a more practical filter for general use cases, evaluating filters on the whole signal at once is simply not conducive to modern workflow standards. Real-time processing with minimal delay/buffer is a standard request, and there exist more complicated and intimate filter systems that evaluate on not only the frequency domain data, but even the time domain data. As well, some systems use a "buffer" system that evaluates on small chunks of our audio at a time, with a small delay to apply the filtering on each one individually, allowing for efficient real-time feedback and modification of parameters like cutoff. \cite{7} These processes are highly optimized and demand control at a memory level for maximum efficiency. 
+
+\section{Appendix}
 
 \begin{thebibliography}{9}
 \bibitem{1} 
@@ -54,4 +81,8 @@ Bounchalen, Anna. \textit{An Elementary Introduction to Fast Fourier Transform A
 Keim, Robert. \textit{The Nyquist-Shannon Theorem: Understanding Sampled Systems - Technical Articles.}. All About Circuits, May 6 2020. \url{https://www.allaboutcircuits.com/technical-articles/nyquist-shannon-theorem-understanding-sampled-systems/}
 \end{thebibliography}
 
+\bibitem{7}
+\url{https://people.montefiore.uliege.be/josmalskyj/files/Gardner1995Efficient.pdf}
+
 \end{document}
+
